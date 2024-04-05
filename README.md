@@ -8,7 +8,7 @@
 
 1. Клонируйте репозиторий с проектом:
    ```bash
-   git clone https://github.com/Dermofet/Music
+   git clone https://github.com/Dermofet/effective-mobile
    ```
    
 2. Перейдите в директорию проекта:
