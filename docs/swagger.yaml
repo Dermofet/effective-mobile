@@ -1,0 +1,139 @@
+definitions:
+  entity.Car:
+    properties:
+      id:
+        type: string
+      mark:
+        type: string
+      model:
+        type: string
+      owner:
+        $ref: '#/definitions/entity.Owner'
+      regNum:
+        type: string
+      year:
+        type: integer
+    type: object
+  entity.Owner:
+    properties:
+      name:
+        type: string
+      patronymic:
+        type: string
+      surname:
+        type: string
+    type: object
+  entity.RegNums:
+    properties:
+      regNum:
+        items:
+          type: string
+        type: array
+    type: object
+host: localhost:8000
+info:
+  contact: {}
+  description: This is a test server for Effective Mobile
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Effective Mobile Test
+  version: "3.0"
+paths:
+  /car/all:
+    get:
+      description: Get all cars
+      parameters:
+      - default: 100
+        description: Limit of cars in response
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - default: 0
+        description: Offset of cars in response
+        in: query
+        name: offset
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Invalid request body or parameter
+        "500":
+          description: Server error
+      summary: Get all cars
+      tags:
+      - Car
+  /car/delete/{id}:
+    delete:
+      description: Delete car by id
+      parameters:
+      - description: Car id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: Car deleted
+        "400":
+          description: Invalid request body or parameter
+        "500":
+          description: Server error
+      summary: Delete car
+      tags:
+      - Car
+  /car/new:
+    post:
+      consumes:
+      - application/json
+      description: Add new car from a list of registration numbers
+      parameters:
+      - description: List of registration numbers
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/entity.RegNums'
+      responses:
+        "201":
+          description: Car added
+        "400":
+          description: Invalid request body or parameter
+        "500":
+          description: Server error
+      summary: Add new car
+      tags:
+      - Car
+  /car/update/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update car by id
+      parameters:
+      - description: Car id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Car data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Car'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Invalid request body or parameter
+        "500":
+          description: Server error
+      summary: Update car
+      tags:
+      - Car
+swagger: "2.0"
